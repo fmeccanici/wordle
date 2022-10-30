@@ -37,3 +37,16 @@ output {
     bottom: 1rem;
     right: 1rem
 }
+
+.tile.absent {
+    background: #666;
+}
+
+.tile.present {
+    background: yellow;
+    color: black;
+}
+
+.tile.correct {
+    background: green;
+}
