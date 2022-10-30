@@ -2,12 +2,17 @@ import Tile from './Tile';
 import words from './words';
 
 export default {
-    theWord: 'cat',
+    theWord: '',
     guessesAllowed: 3,
     currentRowIndex: 0,
     state: 'active',
     message: '',
     errors: false,
+    letters : [
+        'QWERTYUIOP'.split(''),
+        'ASDFGHJKL'.split(''),
+        ['Enter', ...'ZXCVBNM'.split(''), 'Backspace']
+    ],
 
     get currentGuess() {
         return this.currentRow.map(tile => tile.letter).join('');
@@ -22,6 +27,8 @@ export default {
     },
 
     init() {
+        let wordIndex = Math.floor(Math.random() * words.length);
+        this.theWord = words[wordIndex];
         this.board = Array.from({length: this.guessesAllowed}, () => {
             return Array.from({length: this.theWord.length}, (item, index) => new Tile(index));
         });
