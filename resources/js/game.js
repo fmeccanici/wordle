@@ -1,13 +1,17 @@
 import Tile from './Tile';
-import words from './words';
+import {allWords, theWords} from './words';
 
 export default {
-    theWord: 'cat',
+
+    // TODO: Use different files for threeLetter.js fourLetter.js
+    theWord: theWords[Math.floor(Math.random() * theWords.length)],
     guessesAllowed: 3,
     currentRowIndex: 0,
     state: 'active',
     message: '',
     errors: false,
+
+    // TODO: Move to keyboard component
     letters: [
         'QWERTYUIOP'.split(''),
         'ASDFGHJKL'.split(''),
@@ -27,8 +31,6 @@ export default {
     },
 
     init() {
-        // let wordIndex = Math.floor(Math.random() * words.length);
-        // this.theWord = words[wordIndex];
         this.board = Array.from({length: this.guessesAllowed}, () => {
             return Array.from({length: this.theWord.length}, (item, index) => new Tile(index));
         });
@@ -73,9 +75,10 @@ export default {
             return;
         }
 
-        if (!words.includes(this.currentGuess.toUpperCase())) {
+        if (!allWords.includes(this.currentGuess.toUpperCase())) {
             this.errors = true;
-            return this.message = 'Invalid word...';
+             this.message = 'Invalid word...';
+             return;
         }
 
         // TODO: Implement dictionary API
@@ -99,15 +102,14 @@ export default {
 
         if (this.currentGuess === this.theWord) {
             this.state = 'complete';
-            return this.message = 'You Win!';
-        }
-
-        if (this.remainingGuesses === 0) {
+            this.message = 'You Win!';
+        } else if (this.remainingGuesses === 0) {
             this.state = 'complete';
-            return this.message = 'Game Over. You Lose!';
+            this.message = 'Game Over. You Lose!';
+        } else {
+            this.currentRowIndex++;
+            this.message = 'Incorrect';
         }
 
-        this.currentRowIndex++;
-        return this.message = 'Incorrect';
     },
 };
