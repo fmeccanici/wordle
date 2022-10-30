@@ -1,25 +1,35 @@
 import Tile from './Tile';
 
 export default {
+    theWord: 'cat',
     guessesAllowed: 3,
-    wordLength : 3,
     currentRowIndex : 0,
+    state: 'active',
+    message: '',
+
+    get currentGuess() {
+        return this.currentRow.map(tile => tile.letter).join('');
+    },
 
     init() {
         this.board = Array.from({length: this.guessesAllowed}, () => {
-            return Array.from({length: this.wordLength}, () => new Tile());
+            return Array.from({length: this.theWord.length}, () => new Tile());
         });
     },
 
     onKeyPress(key)
     {
+        this.message = '';
         if (/^[A-z]$/.test(key))
         {
             this.fillTile(key);
+        } else if (key === 'Enter')
+        {
+            this.submitGuess();
         }
     },
     fillTile(key) {
-        for(let tile of this.currentRow()) {
+        for(let tile of this.currentRow) {
             if (! tile.letter)
             {
                 tile.fill(key);
@@ -28,7 +38,27 @@ export default {
         }
 
     },
-    currentRow() {
+    get currentRow() {
         return this.board[this.currentRowIndex];
+    },
+    submitGuess() {
+        let guess = this.currentGuess;
+
+        if (guess.length < this.word.length) {
+            return ;
+        }
+
+        if (guess === this.theWord)
+        {
+            this.message = 'You Win!';
+        } else if (this.guessesAllowed === this.currentRowIndex + 1)
+        {
+            this.message = 'Game Over. You Lose!';
+            this.state = 'complete';
+        }
+        else {
+            this.message = 'Incorrect';
+            this.currentRowIndex++;
+        }
     }
 };

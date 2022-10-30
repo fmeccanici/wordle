@@ -10,21 +10,23 @@
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body>
-    <div
-        id="game"
-        x-data="game"
-        @keyup.window="onKeyPress($event.key)">
-        <template x-for="row in board">
-            <div class="row">
-                <template x-for="tile in row">
-                    <div class="tile" x-text="tile.letter">
+        <main @keyup.window="onKeyPress($event.key)"
+              x-data="game">
+            <div
+                id="game">
+                <template x-for="row in board">
+                    <div class="row">
+                        <template x-for="tile in row">
+                            <div class="tile" x-text="tile.letter">
 
+                            </div>
+                        </template>
                     </div>
                 </template>
             </div>
-        </template>
-    </div>
 
+            <output x-text="message"></output>
+        </main>
     </body>
 
 </html>
