@@ -23,7 +23,7 @@ export default {
 
     init() {
         this.board = Array.from({length: this.guessesAllowed}, () => {
-            return Array.from({length: this.theWord.length}, () => new Tile());
+            return Array.from({length: this.theWord.length}, (item, index) => new Tile(index));
         });
     },
 
@@ -60,8 +60,7 @@ export default {
             return;
         }
 
-        if (! words.includes(this.currentGuess.toUpperCase()))
-        {
+        if (!words.includes(this.currentGuess.toUpperCase())) {
             this.errors = true;
             return this.message = 'Invalid word...';
         }
@@ -71,9 +70,19 @@ export default {
         // {
         //
         // }
-        for (let tile of this.currentRow) {
-            tile.updateStatus(this.currentGuess, this.theWord);
-        }
+        // for (let tile of this.currentRow) {
+        //     tile.updateStatus(this.currentGuess, this.theWord);
+        // }
+
+        Tile.updateStatusesForRow(this.currentRow, this.theWord);
+
+        this.currentRow.forEach((tile, index) => {
+            if (tile.status !== 'present') return;
+
+            if (this.currentRow.some(t => t.letter === tile.letter && t.status === 'correct')) {
+                tile.status = 'absent';
+            }
+        });
 
         if (this.currentGuess === this.theWord) {
             this.state = 'complete';
