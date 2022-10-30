@@ -2,13 +2,13 @@ import Tile from './Tile';
 import words from './words';
 
 export default {
-    theWord: '',
+    theWord: 'cat',
     guessesAllowed: 3,
     currentRowIndex: 0,
     state: 'active',
     message: '',
     errors: false,
-    letters : [
+    letters: [
         'QWERTYUIOP'.split(''),
         'ASDFGHJKL'.split(''),
         ['Enter', ...'ZXCVBNM'.split(''), 'Backspace']
@@ -27,13 +27,19 @@ export default {
     },
 
     init() {
-        let wordIndex = Math.floor(Math.random() * words.length);
-        this.theWord = words[wordIndex];
+        // let wordIndex = Math.floor(Math.random() * words.length);
+        // this.theWord = words[wordIndex];
         this.board = Array.from({length: this.guessesAllowed}, () => {
             return Array.from({length: this.theWord.length}, (item, index) => new Tile(index));
         });
     },
-
+    matchingTileForKey(key) {
+        return this.board
+            .flat()
+            .filter((tile) => tile.status)
+            .sort((t1, t2) => t2.status === 'correct' ? 1 : -1)
+            .find((tile) => tile.letter === key.toLowerCase());
+    },
     onKeyPress(key) {
         this.message = '';
         this.errors = false;
