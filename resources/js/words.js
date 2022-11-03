@@ -1,5 +1,20 @@
 export let theWords = [
-    'cat', 'dog', 'kid', 'mom', 'dad', 'big', 'hat'
+    'cat', 'dog', 'kid', 'mom',
+    'dad', 'big', 'hat', 'ago',
+    'all', 'any', 'bad', 'few',
+    'hot', 'how', 'mad', 'new',
+    'now', 'old', 'one', 'red',
+    'sad', 'six', 'ten', 'two',
+    'aha', 'and', 'bah', 'but',
+    'for', 'nor', 'off', 'qua',
+    'the', 'yet', 'air', 'ant',
+    'bed', 'boy', 'can', 'car',
+    'day', 'dew', 'elf', 'elk',
+    'gym', 'ink', 'jet', 'key',
+    'log', 'man', 'one', 'pal',
+    'rug', 'saw', 'son', 'sun',
+    'urn', 'vet', 'way', 'yap',
+    'zag', 'zen', 'zoo'
 ];
 export let allWords = ["AAH",
     "AAL",
